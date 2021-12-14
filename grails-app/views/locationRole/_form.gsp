@@ -27,7 +27,7 @@
                     <label for="location.id"><warehouse:message code="locationRole.location.label" default="Location" /></label>
                 </td>
                 <td valign="top" class="value ${hasErrors(bean: locationRoleInstance, field: 'location', 'errors')}">
-                    <g:selectLocation
+                    <g:selectLocationWithSubmitRequestActivity
                             class="chzn-select-deselect"
                             name="location.id"
                             noSelection="['':'']"

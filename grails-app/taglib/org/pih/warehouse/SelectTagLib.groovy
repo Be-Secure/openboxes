@@ -501,6 +501,30 @@ class SelectTagLib {
         out << g.select(attrs)
     }
 
+    def selectLocationWithSubmitRequestActivity = { attrs, body ->
+
+        // If attrs.from is populated use that by default even if it's empty
+        if (!attrs.containsKey("from")) {
+            ActivityCode activityCode = attrs.activityCode ?: null
+            attrs.from = locationService.getAllLocations().sort { it?.name?.toLowerCase() }
+
+            // use sparingly - this is expensive since it requires multiple database queries
+            if (activityCode) {
+                attrs.from = attrs.from.findAll { it.supports(activityCode) || (!it.supports(activityCode) && it.supports(ActivityCode.SUBMIT_REQUEST)) }
+            }
+        }
+
+        attrs.optionKey = 'id'
+        attrs.groupBy = 'locationType'
+        if (attrs.groupBy) {
+            attrs.optionValue = { it.name }
+        } else {
+            attrs.optionValue = { it.name + " [" + format.metadata(obj: it?.locationType) + "]" }
+        }
+
+        out << g.select(attrs)
+    }
+
     def selectTransactionType = { attrs, body ->
 
         List transactionTypes = (attrs.transactionCode) ?

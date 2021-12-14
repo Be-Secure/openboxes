@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+  <changeSet author="MagdaToczek" id="1412202111400-0">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        SELECT count(*)
+        FROM location_type_supported_activities
+        WHERE location_type_id = '2'
+        AND supported_activities_string = 'SUBMIT_REQUEST';
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="location_type_supported_activities">
+      <column name="location_type_id" value="2"/>
+      <column name="supported_activities_string" value="SUBMIT_REQUEST"/>
+    </insert>
+  </changeSet>
+
+</databaseChangeLog>
