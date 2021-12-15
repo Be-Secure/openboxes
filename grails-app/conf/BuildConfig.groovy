@@ -54,7 +54,7 @@ grails.project.dependency.resolution = {
 
         // Required by docx4j functionality
         compile('org.docx4j:docx4j:2.8.1') {
-            excludes 'commons-logging:commons-logging:1.0.4', 'commons-codec', 'commons-io'
+            excludes 'commons-codec', 'commons-io', 'commons-logging', 'log4j'
         }
 
         // Required for barcode4j
@@ -116,11 +116,13 @@ grails.project.dependency.resolution = {
         // Unknown
         build('org.jboss.tattletale:tattletale-ant:1.2.0.Beta2') { excludes "ant", "javassist" }
         compile('org.codehaus.groovy.modules.http-builder:http-builder:0.6') {
-            excludes "xercesImpl", "groovy", "commons-lang", "commons-codec"
+            excludes  "commons-codec", "commons-lang", "commons-logging", "groovy", "xercesImpl"
         }
 
         // REST client
-        compile 'org.apache.httpcomponents:httpclient:4.5.12'
+        compile('org.apache.httpcomponents:httpclient:4.5.12') {
+            exclude "commons-logging"  // grails uses SLF4J
+        }
 
         // for com.google.common
         compile 'com.google.guava:guava:12.0'
